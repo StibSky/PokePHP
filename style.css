@@ -1,0 +1,258 @@
+*{
+    box-sizing: border-box;
+    padding:0;
+    margin:0;
+}
+body{
+    background-image: url("images/deck.png"), url("images/veelVentjes.jpg");
+    background-repeat: no-repeat, repeat-y;
+    background-size: auto, cover;
+    background-position-x:center;
+    background-position-Y:100px, 0px;
+    font-family: sans-serif;
+    font-size: 14px;
+
+}
+/*-------------------------------------------------------------------- the search part ---------------------------------------------------------------------*/
+#ask{
+    width:360px;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top: 2%;
+}
+button {
+  background-color:white;
+    width: 50px;
+    height: 50px;
+   border: 1px solid #ccc;
+    margin-left: 4px;
+    border-radius: 25px;
+    margin-top: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+}
+button i{
+    font-size: 26px;
+    font-weight: bold;
+    color: gray;
+ }
+button i.hover{
+     background-color: #eee;
+     border:none !important;
+ }
+ input{
+     width: 300px;
+     height: 50px;
+     border-radius: 5px;
+     padding:10px;
+     font-size: 18px;
+ }
+/*-------------------------------------------------------------------- poke info ---------------------------------------------------------------------*/
+#pokeImg{
+    top:272px;
+    margin-left:-225px;
+    width:100px;
+    height:100px;
+}
+ #pokeImg, #evoImg, #nextImg{
+     position:absolute;
+     left:50%;
+
+ }
+ #evoImg{
+     margin-left:-300px;
+     top:283px;
+ }
+#shinyImg{
+    position:absolute;
+    left:50%;
+    width: 56px;
+    height: 56px;
+    margin-left:-314px;
+    top:132px;
+}
+#nextImg {
+    margin-left:-153px;
+    top:267px;
+    width:100px;
+    height:100px;
+
+}
+/*------------------------------------------------------------end poke-images, begin poke-text--------------------------------------------------*/
+#pokeId, #pokeName{
+    position:absolute;
+    left:50%;
+    margin-left:-209px;
+    top:520px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#pokeName{
+    margin-left:140px;
+    top:243px;
+}
+#prevEvolution, #weightPoke, #abilitiesPoke, #nextEvolution{
+    position:absolute;
+    left:50%;
+    margin-left:70px;
+}
+#prevEvolution{
+    top:265px;
+}
+#nextEvolution{
+    top:283px;
+}
+#weightPoke{
+    top:302px;
+}
+#abilitiesPoke{
+    top:321px;
+}
+#pokeMove1, #pokeMove2, #pokeMove3, #pokeMove4{
+     position:absolute;
+     left:50%;
+     margin-left:78px;
+     top:368px;
+     color:white;
+}
+#pokeMove2{
+    margin-left:207px;
+    top:368px;
+}
+#pokeMove3{
+    margin-left:78px;
+    top:408px;
+}
+#pokeMove4{
+    margin-left:207px;
+    top:408px;
+}
+#pokeTypes1, #pokeTypes2{
+    position:absolute;
+    left:50%;
+    color:white;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-shadow: 1px 1px 2px #444;
+}
+#pokeTypes1{
+    margin-left:105px;
+    top:530px;
+}
+#pokeTypes2{
+    margin-left:210px;
+    top:530px;
+}
+
+/*------------------------------------------------------ when the screenwidth is smaller than the background pokedex -----------------------------------------------------*/
+@media screen and (max-width: 674px) {
+ body{
+        background-size: 105% 485px, cover;
+    }
+#pokeName{
+        margin-left:139px;
+    }
+#pokeId {;
+    margin-left: -190px;
+}
+ #pokeMove2, #pokeMove4{
+        margin-left:190px;
+    }
+#pokeMove3, #pokeMove1{
+        margin-left:70px;
+    }
+ #shinyImg{
+        margin-left:-288px;
+    }
+ #pokeImg{
+        margin-left:-172px;
+    }
+#evoImg{
+        margin-left:-275px;
+    }
+}
+/*---------------------------------------------------------------------- small size for phone -----------------------------------------------------------------------*/
+@media screen and (max-width: 600px) {
+
+body{
+    margin:0;
+    padding:0;
+    background-color:#D2381E;
+    background-image: none;
+}
+div#forPhone{
+    position: relative;
+    background-color: white;
+    border-radius: 5px;
+
+    width:90%;
+    height:250px;
+
+    margin-top:50%;
+    margin-left:auto;
+    margin-right:auto;
+    z-index: 5;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+}
+    #pokeImg, #evoImg, #nextImg{
+        width:220px;
+        height:220px;
+        z-index: 50;
+    }
+    #nextImg {
+        top:180px;
+        margin-left:-2px;
+    }
+    #pokeImg{
+        top:180px;
+        margin-left:-108px;
+    }
+    /* afblijven, die is 'OK' */
+    #shinyImg{
+        top:13px;
+        margin-left:-240px;
+
+    }
+    #evoImg {
+        top:210px;
+        margin-left: -260px;
+        width:205px;
+        height:205px;
+    }
+    #pokeName{
+        top:400px;
+        left:50%;
+        margin-left:-70px;
+        font-size: 2em;
+    }
+    #prevEvolution, #weightPoke, #abilitiesPoke{
+
+        margin-left:-25%;
+    }
+    #weightPoke{
+        top:450px;
+        margin-left:-25%;
+    }
+    #abilitiesPoke{
+        top:470px;
+        margin-left:-25%;
+    }
+    #prevEvolution{
+        top:490px;
+    }
+
+    #pokeMove2, #pokeMove4,#pokeMove3, #pokeMove1{
+        color:black;
+        left:15%;
+       margin-top:160px;
+
+        font-size:1em ;
+        font-weight: bold;
+    }
+    #pokeId{
+        margin-left:-10px;
+      margin-bottom:5%;
+        font-size: 18px;
+        top: 95%;
+    }
+
+}
