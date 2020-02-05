@@ -14,12 +14,7 @@ function pokeImages($pokemonRequired)
     $json = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . strtolower($pokemonRequired));
     $data = json_decode($json, true);
     $sprite = $data["sprites"]["front_default"];
-    if ($pokemonRequired == "deoxys") {
-        $sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/386.png";
-    }
     echo $sprite;
-
-
 }
 
 
@@ -33,7 +28,6 @@ $chainData = json_decode($chainApi, true);
 $firstEvolution = $chainData['chain']['species']['name'];
 $secondEvolution = $chainData['chain']['evolves_to'][0]['species']['name'];
 $thirdEvolution = $chainData['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
-
 
 
 if ($inputName == $firstEvolution) {
@@ -68,7 +62,6 @@ if ($nextForm == NULL) {
 }
 
 
-
 $abilitiesNewArray = array();
 for ($i = 0; $i < count($mainData["abilities"]); $i++) { // to get all elements from the array
     array_push($abilitiesNewArray, $mainData["abilities"][$i]["ability"]["name"]); // to add new array + to select abilities specifically from the array
@@ -79,23 +72,36 @@ $randomAbility = $abilitiesNewArray[$randIndex];
 $movesArray = array();
 for ($i = 0; $i < count($mainData["moves"]); $i++) { // to get all elements from the array
     array_push($movesArray, $mainData["moves"][$i]["move"]["name"]); // to add new array + to select abilities specifically from the array
-    $randMoveIndex = array_rand($movesArray, 4);
+    $randMoveIndex = array_rand($movesArray, count($movesArray));
+
 }
 
-$randomMove1 = $movesArray[$randMoveIndex[0]];
-$randomMove2 = $movesArray[$randMoveIndex[1]];
-$randomMove3 = $movesArray[$randMoveIndex[2]];
-$randomMove4 = $movesArray[$randMoveIndex[3]];
+if (count($movesArray) == 1) {
+    $randomMove1 = $movesArray[0];
+} else {
 
-$type1= $mainData["types"][0]["type"]["name"];
+    $randomMove1 = $movesArray[$randMoveIndex[0]];
+    $randomMove2 = $movesArray[$randMoveIndex[1]];
+    $randomMove3 = $movesArray[$randMoveIndex[2]];
+    $randomMove4 = $movesArray[$randMoveIndex[3]];
+}
+
+$type1 = $mainData["types"][0]["type"]["name"];
 $type2 = $mainData["types"][1]["type"]["name"];
 
-if ($type2 == NULL ) {
+if ($type2 == NULL) {
     $type2 = "";
 }
 
-?>
+$eeveeArray = ["vaporeon", "jolteon", "flareon", "umbreon", "leafeon", "sylveon", "glaceon", "espeon"];
+if ($inputName == "eevee") {
+    $randEeveeIndex = array_rand($eeveeArray);
+    $secondEvolution = $eeveeArray[$randEeveeIndex];
+    $nextForm = "multiple";
+}
 
+
+?>
 
 
 <!DOCTYPE html>
@@ -113,8 +119,8 @@ if ($type2 == NULL ) {
         <input type="text" name="pokemon" id="pokemon" placeholder="Choose your pokemon">
     </form>
 </div>
-<img src="<?php pokeImages($firstEvolution); ?>" alt="" id="evoImg" style = "<?php echo $setBorder1 ?>">
-<img src=" <?php pokeImages($secondEvolution); ?>" alt="" id="pokeImg" style = "<?php echo $setBorder2 ?>">
+<img src="<?php pokeImages($firstEvolution); ?>" alt="" id="evoImg" style="<?php echo $setBorder1 ?>">
+<img src=" <?php pokeImages($secondEvolution); ?>" alt="" id="pokeImg" style="<?php echo $setBorder2 ?>">
 <img src="<?php pokeImages($thirdEvolution); ?>" alt="" id="nextImg"/ style = "<?php echo $setBorder3 ?>">
 <img src="<?php echo $shinySprite; ?>" alt="" id="shinyImg"/>
 <div id="forPhone">
