@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
 $inputPokemon = $_GET['pokemon'];
 $mainJson = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . strtolower($inputPokemon));
@@ -13,7 +15,12 @@ function pokeImages($pokemonRequired)
 {
     $json = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . strtolower($pokemonRequired));
     $data = json_decode($json, true);
-    $sprite = $data["sprites"]["front_default"];
+
+    if (isset($data["sprites"]["front_default"])) {
+        $sprite = $data["sprites"]["front_default"];
+    } else {
+        $sprite = "";
+    }
     echo $sprite;
 }
 
@@ -25,9 +32,25 @@ $chain = $evolutionData["evolution_chain"]["url"];
 
 $chainApi = file_get_contents($chain);
 $chainData = json_decode($chainApi, true);
-$firstEvolution = $chainData['chain']['species']['name'];
-$secondEvolution = $chainData['chain']['evolves_to'][0]['species']['name'];
-$thirdEvolution = $chainData['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
+
+if (count($chainData['chain']['evolves_to']) == 1 && $chainData['chain']['evolves_to'][0]['evolves_to'][0] == null) {
+    $firstEvolution = $chainData['chain']['species']['name'];
+    $secondEvolution = $chainData['chain']['evolves_to'][0]['species']['name'];
+    $thirdEvolution = "";
+} else if (count($chainData['chain']['evolves_to']) == 1) {
+    $firstEvolution = $chainData['chain']['species']['name'];
+    $secondEvolution = $chainData['chain']['evolves_to'][0]['species']['name'];
+    $thirdEvolution = $chainData['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
+} else if (count($chainData['chain']['evolves_to']) == 0) {
+    $firstEvolution = "";
+    $secondEvolution = $inputName;
+    $thirdEvolution = "";
+} else {
+    $firstEvolution = "none";
+    $secondEvolution = $inputName;
+    $thirdEvolution = "";
+}
+
 
 
 if ($inputName == $firstEvolution) {
@@ -57,6 +80,7 @@ if ($inputName == $thirdEvolution) {
 }
 
 
+
 if ($nextForm == NULL) {
     $nextForm = "no next";
 }
@@ -78,6 +102,9 @@ for ($i = 0; $i < count($mainData["moves"]); $i++) { // to get all elements from
 
 if (count($movesArray) == 1) {
     $randomMove1 = $movesArray[0];
+    $randomMove2 = "";
+    $randomMove3 = "";
+    $randomMove4 = "";
 } else {
 
     $randomMove1 = $movesArray[$randMoveIndex[0]];
@@ -86,18 +113,30 @@ if (count($movesArray) == 1) {
     $randomMove4 = $movesArray[$randMoveIndex[3]];
 }
 
-$type1 = $mainData["types"][0]["type"]["name"];
-$type2 = $mainData["types"][1]["type"]["name"];
-
-if ($type2 == NULL) {
+if (count($mainData["types"]) > 1) {
+    $type1 = $mainData["types"][0]["type"]["name"];
+    $type2 = $mainData["types"][1]["type"]["name"];
+} else {
+    $type1 = $mainData["types"][0]["type"]["name"];
     $type2 = "";
 }
 
-$eeveeArray = ["vaporeon", "jolteon", "flareon", "umbreon", "leafeon", "sylveon", "glaceon", "espeon"];
+
+$eeveeArray = array();
+if (count($chainData["chain"]["evolves_to"]) > 1) {
+    for ($i = 1; $i < count($chainData["chain"]["evolves_to"]); $i++) {
+        array_push($eeveeArray, $chainData['chain']['evolves_to'][$i]['species']['name']);
+    }
+
+}
 if ($inputName == "eevee") {
     $randEeveeIndex = array_rand($eeveeArray);
+    $firstEvolution = $inputName;
     $secondEvolution = $eeveeArray[$randEeveeIndex];
+    $setBorder1 = "border: 5px solid green";
+    $setBorder2 = "";
     $nextForm = "multiple";
+
 }
 
 
