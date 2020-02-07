@@ -1,15 +1,26 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 
 $inputPokemon = $_GET['pokemon'];
+$allPokemon = [];
+$allPokemonResponse = file_get_contents("https://pokeapi.co/api/v2/pokemon?offset=0&limit=964");
+$allPokemonData = json_decode($allPokemonResponse, true);
+
+for($i = 1; $i < 964; $i++ ) {
+    array_push($allPokemon, $allPokemonData['results'][$i]['name']);
+}
+if (!(in_array($inputPokemon, $allPokemon))){
+    $inputPokemon = 'miltank';
+}
+
+
 $mainJson = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . strtolower($inputPokemon));
 $mainData = json_decode($mainJson, true);
 $inputName = $mainData["name"];
 $inputWeight = $mainData["weight"];
 $inputId = $mainData["id"];
 $shinySprite = $mainData["sprites"]["front_shiny"];
+
+
 
 function pokeImages($pokemonRequired)
 {
@@ -22,6 +33,7 @@ function pokeImages($pokemonRequired)
         $sprite = "";
     }
     echo $sprite;
+
 }
 
 
@@ -96,7 +108,7 @@ $randomAbility = $abilitiesNewArray[$randIndex];
 $movesArray = array();
 for ($i = 0; $i < count($mainData["moves"]); $i++) { // to get all elements from the array
     array_push($movesArray, $mainData["moves"][$i]["move"]["name"]); // to add new array + to select abilities specifically from the array
-    $randMoveIndex = array_rand($movesArray, count($movesArray));
+    $randMoveIndex = array_rand($movesArray, 4);
 
 }
 
@@ -112,6 +124,8 @@ if (count($movesArray) == 1) {
     $randomMove3 = $movesArray[$randMoveIndex[2]];
     $randomMove4 = $movesArray[$randMoveIndex[3]];
 }
+
+var_dump($randomMove1);
 
 if (count($mainData["types"]) > 1) {
     $type1 = $mainData["types"][0]["type"]["name"];
@@ -137,6 +151,15 @@ if ($inputName == "eevee") {
     $setBorder2 = "";
     $nextForm = "multiple";
 
+}
+
+// hardcoding because the eevee part of the api breaks my brain
+if ($inputName == 'vaporeon' || $inputName == 'flareon' || $inputName == 'jolteon' || $inputName == 'sylveon' || $inputName == 'umbreon'
+    || $inputName == 'espeon' || $inputName == 'glaceon') {
+    $firstEvolution = "eevee";
+    $secondEvolution= $inputName;
+    $thirdEvolution ="";
+    $previousForm = "eevee";
 }
 
 

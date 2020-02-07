@@ -4,7 +4,7 @@
     margin:0;
 }
 body{
-    background-image: url("images/deck.png"), url("images/pikapic.jpg");
+    background-image: url("images/deck.png"), url("images/pokegrass.jpg");
     background-repeat: no-repeat, repeat-y;
     background-size: auto, cover;
     background-position-x:center;
